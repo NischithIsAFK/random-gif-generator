@@ -1,0 +1,50 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  gif-generator
+
+  Sample SAM Template for gif-generator
+
+Globals:
+  Function:
+    Timeout: 10
+
+Resources:
+  GIFGeneratorFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ./gif-generator
+      Handler: gif-gen.handler
+      Runtime: nodejs20.x
+      Layers:
+        - !Ref LambdaDependencies
+      Architectures:
+        - x86_64
+      Environment:
+        Variables:
+          API_KEY: <api-key>
+      Events:
+        GifGeneratorAPI:
+          Type: Api
+          Properties:
+            Path: /generate-gif
+            Method: get
+
+  LambdaDependencies:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: sam-dependencies
+      ContentUri: dependencies/nodejs
+      CompatibleRuntimes:
+        - nodejs20.x
+      LicenseInfo: "MIT"
+      RetentionPolicy: delete
+    Metadata:
+      BuildMethod: nodejs20.x
+      BuildProperties:
+        PackageManager: npm
+        LayerPackaging: true
+Outputs:
+  GifGeneratorAPI:
+    Description: "API Gateway endpoint URL for Prod stage for Hello World function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
