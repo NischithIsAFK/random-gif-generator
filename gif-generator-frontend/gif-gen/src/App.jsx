@@ -7,9 +7,7 @@ function App() {
 
   const generateGif = async () => {
     try {
-      const response = await axios.get(
-        "https://354xd0nn51.execute-api.us-east-1.amazonaws.com/Prod/generate-gif"
-      );
+      const response = await axios.get("your-api-url-from-backend");
       console.log(response.data);
       setGifUrl(response.data.apiurl);
     } catch (err) {
