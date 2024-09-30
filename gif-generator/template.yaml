@@ -8,6 +8,11 @@ Description: >
 Globals:
   Function:
     Timeout: 10
+  Api:
+    Cors:
+      AllowMethods: "'GET,POST,OPTIONS'"
+      AllowOrigin: "'*'"
+      AllowHeaders: "'Content-Type'"
 
 Resources:
   GIFGeneratorFunction:
@@ -28,7 +33,7 @@ Resources:
           Type: Api
           Properties:
             Path: /generate-gif
-            Method: get
+            Method: post
 
   LambdaDependencies:
     Type: AWS::Serverless::LayerVersion
