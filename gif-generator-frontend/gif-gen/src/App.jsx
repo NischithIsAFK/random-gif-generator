@@ -4,13 +4,13 @@ import axios from "axios";
 
 function App() {
   const [gifUrl, setGifUrl] = useState("");
-  const [tag, setTag] = useState(""); 
+  const [tag, setTag] = useState("");
 
   const generateGif = async () => {
     try {
       const response = await axios.post(
         "https://354xd0nn51.execute-api.us-east-1.amazonaws.com/Prod/generate-gif",
-        { tag }, 
+        { tag },
         {
           headers: {
             "Content-Type": "application/json",
@@ -26,20 +26,21 @@ function App() {
   return (
     <div>
       <h1>GIF Generator</h1>
-      
 
       <input
         type="text"
         value={tag}
-        onChange={(e) => setTag(e.target.value)} 
+        onChange={(e) => setTag(e.target.value)}
         placeholder="Enter a tag (e.g., avengers)"
       />
-      
 
-      <button type="button" onClick={generateGif}>
-        Generate GIF
-      </button>
-      
+      <div>
+        {tag && (
+          <button type="button" onClick={generateGif}>
+            Generate GIF
+          </button>
+        )}
+      </div>
       <div>
         {gifUrl && (
           <img
